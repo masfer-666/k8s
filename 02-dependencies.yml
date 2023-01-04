@@ -11,6 +11,28 @@
         {
         "exec-opts": ["native.cgroupdriver=systemd"]
         }
+        
+   - name: disable swap
+     shell: swapoff -a
+
+   - name: disable swap in fstab
+     replace:
+       path: /etc/fstab
+       regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+       replace: '# \1'
+   - name: Install required packages
+      package:
+        name:
+          - net-tools
+          - traceroute
+          - mtr
+          - vim
+          - bind9-utils
+          - rsync
+          - htop
+          - wget
+          - nmap
+        state: installed
 
    - name: install Docker
      apt:
