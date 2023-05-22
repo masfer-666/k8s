@@ -4,7 +4,7 @@ mkdir -p /opt/k8s/
 apt update && apt upgrade -y 
 
 # install package dependencies
-apt-get install net-tools git traceroute mtr vim bind9-utils rsync htop wget nmap -y
+apt-get install net-tools git traceroute mtr neovim bind9-utils rsync htop wget nmap -y
 
 # ansible
 sudo apt-add-repository ppa:ansible/ansible && sudo apt update && sudo apt install ansible -y 
