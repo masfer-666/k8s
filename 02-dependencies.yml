@@ -27,7 +27,7 @@
           - net-tools
           - traceroute
           - mtr
-          - vim
+          - neovim
           - bind9-utils
           - rsync
           - htop
