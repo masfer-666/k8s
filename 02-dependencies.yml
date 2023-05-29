@@ -11,29 +11,6 @@
         {
         "exec-opts": ["native.cgroupdriver=systemd"]
         }
-        
-   - name: disable swap
-     shell: swapoff -a
-
-   - name: disable swap in fstab
-     replace:
-       path: /etc/fstab
-       regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
-       replace: '# \1'
-
-   - name: Install required packages
-      package:
-        name:
-          - net-tools
-          - traceroute
-          - mtr
-          - neovim
-          - bind9-utils
-          - rsync
-          - htop
-          - wget
-          - nmap
-        state: installed
 
    - name: install Docker
      apt:
@@ -57,6 +34,15 @@
       state: present
       filename: 'kubernetes'
 
+   - name: disable swap
+     shell: swapoff -a
+
+   - name: disable swap in fstab
+     replace:
+       path: /etc/fstab
+       regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+       replace: '# \1'
+
    - name: install kubelet
      apt:
        name: kubelet=1.22.4-00
@@ -68,7 +54,37 @@
        name: kubeadm=1.22.4-00
        state: present
 
-- hosts: control_plane
+   - name: install vim
+     apt:
+       name: vim
+       update_cache: yes
+
+   - name: install mtr
+     apt:
+       name: mtr
+       update_cache: yes
+
+   - name: install bind9
+     apt:
+       name: bind9-utils
+       update_cache: yes
+
+   - name: install rsync
+     apt:
+       name: rsync
+       update_cache: yes
+
+   - name: install htop
+     apt:
+       name: htop
+       update_cache: yes
+
+   - name: install nmap
+     apt:
+       name: nmap
+       update_cache: yes
+
+- hosts: masters
   become: yes
   tasks:
    - name: install kubectl
